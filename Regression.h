@@ -152,6 +152,9 @@ class Regression {
   FHESISecKey &GetSecretKey() { return secretKey; }
   
   vector<Ciphertext> labels;
+
+  Matrix<Ciphertext> data;
+
  private:
   const FHEcontext &context;
  
@@ -161,7 +164,7 @@ class Regression {
   KeySwitchSI keySwitch;
   vector<KeySwitchSI> autoKeySwitch;
 
-  Matrix<Ciphertext> data;
+
   
   void SumBatchedData(Ciphertext &batchedData) const {
     int k = context.Generator();

@@ -58,6 +58,30 @@ static int RunRegressionTest(Matrix<ZZ> &rawData, vector<ZZ> &labels,
 
   secretKey.Decrypt(tmp, encDet);
   tmp.DecodeSlots(msgs);
+
+  // Output keys
+  cout << "Output secret key\n";
+  std::ofstream ofs_secret_key;
+  ofs_secret_key.open("secret_key.txt", std::ofstream::out | std::ofstream::app);
+  secretKey.Export(ofs_secret_key);
+  ofs_secret_key.close();
+
+  cout << "Output public key\n";
+  FHESIPubKey publicKey = regress.GetPublicKey();
+  std::ofstream ofs_public_key;
+  ofs_public_key.open("public_key.txt", std::ofstream::out | std::ofstream::app);
+  publicKey.Export(ofs_public_key);
+  ofs_public_key.close();
+
+  cout << "Output encypted data\n";
+  std::ofstream ofs_enc_data;
+  ofs_enc_data.open("encrypted_data.txt", std::ofstream::out | std::ofstream::app);
+  ofs_enc_data << regress.data;
+  ofs_enc_data.close();
+
+
+
+
   
   cout << "  Determinant: " << msgs[0] << endl << endl;
   cout << "Decryption time: " << (clock() - decStart)/CLOCKS_PER_SEC << endl;
@@ -96,6 +120,13 @@ int main(int argc, char *argv[]) {
   if (!LoadData(rawData, labels, dim, datafile)) {
     return 1;
   }
+
+  // Write out matrix
+  cout << "Output raw matrix\n";
+  std::ofstream ofs_raw_data;
+  ofs_raw_data.open("raw_data.txt", std::ofstream::out | std::ofstream::app);
+  ofs_raw_data << rawData;
+  ofs_raw_data.close();
   
   unsigned n = (p-1)/2-1;
   unsigned nBlocks = labels.size() / blockSize;
