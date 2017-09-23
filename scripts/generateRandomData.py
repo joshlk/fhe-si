@@ -4,7 +4,7 @@ import random, sys, math
 
 nFiles = 1
 if len(sys.argv) < 4:
-    print 'usage: python generateRandomData.py filename d N [nFiles]'
+    print('usage: python generateRandomData.py filename d N [nFiles]')
     sys.exit(1)
 else:
     filename = sys.argv[1]
